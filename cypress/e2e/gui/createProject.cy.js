@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker' // geração de dados aleatórios para testes 
 
-describe('create a new project', () =>{
+const options = { env: {snapshotOnly: true}}
+
+describe('create a new project', options, () =>{
     
     // --------------------------------- Pré-condição
     
