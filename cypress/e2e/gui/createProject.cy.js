@@ -5,6 +5,7 @@ describe('create a new project', () =>{
     // --------------------------------- Pré-condição
     
     beforeEach(() =>{
+        cy.api_deleteProjects()
         cy.login()
     })
     // --------------------------------- Ação
