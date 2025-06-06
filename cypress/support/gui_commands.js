@@ -1,7 +1,7 @@
 Cypress.Commands.add('login', (
     user = Cypress.env('user_name'),
     password = Cypress.env('user_password'),
-    { cacheSession = true} = {},
+    { cacheSession = true } = {},
 
 ) => {
     const login = () => {
@@ -11,24 +11,36 @@ Cypress.Commands.add('login', (
         cy.get("[data-qa-selector='password_field']").type(password, { log: false })
         cy.get("[data-qa-selector='sign_in_button']").click()
     }
-    
 
-    const options = { cacheAcrossSpecs: true, }
+
+    const validate = () => {
+        cy.visit('/')
+        cy.location('pathname', { timeout: 1000 })
+            .should('not.eq', '/users/sign_in')
+    }
+
+
+    const options = { 
+        cacheAcrossSpecs: true, 
+        validate,
+    }
+
 
     if (cacheSession) {
         cy.session(user, login, options)
     }
     else {
         login()
-    } 
+    }
 
+    
     login()
 })
 
 
 Cypress.Commands.add('logout', () => {
     cy.get('.qa-user-avatar').click()
-  //  cy.get("[data-qa-selector='sign_out_link']").click()
+    //  cy.get("[data-qa-selector='sign_out_link']").click()
     cy.contains('Sign out').click()
 
 })
