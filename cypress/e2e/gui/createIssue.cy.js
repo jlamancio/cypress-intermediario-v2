@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
 
-describe('Criar um Issue no projeto', () => {
+const options = { env: { snapshotOnly: true } }
+
+
+describe('Criar um Issue no projeto', options,  () => {
     const issue = {
         title: `issue-${faker.datatype.uuid()}`,
         description: faker.random.words(3),
@@ -13,7 +16,7 @@ describe('Criar um Issue no projeto', () => {
     beforeEach(() => {
         cy.api_deleteProjects()
         cy.login()
-        cy.gui_createProject(issue.project)
+        cy.api_createProject(issue.project)
     })
 
     it.only('Issue criado com sucesso', () => {
